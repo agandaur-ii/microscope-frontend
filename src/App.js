@@ -36,7 +36,7 @@ class App extends Component {
     api.boards.getBoards()
     .then(data => {
       this.setState({
-        allBoards: data
+        allBoards: data.data
       })
     })
   }
@@ -71,7 +71,7 @@ class App extends Component {
 
           <Route
             exact path="/account"
-            render={()=><MyAccount user={this.state.auth.user} myBoards={this.state.allBoards.filter(b => b.user_id === this.state.auth.user.id)} />}
+            render={()=><MyAccount user={this.state.auth.user} myBoards={this.state.allBoards.filter(b => b.user_id === this.state.auth.user.user_id && b.attributes.parent === null) } />}
           />
 
         </div>

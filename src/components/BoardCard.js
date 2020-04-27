@@ -1,16 +1,16 @@
 import React from "react";
-import Card from 'react-bootstrap/Card';
+import {Card, Button } from 'react-bootstrap';
 
 
 
 function BoardCard(props) {
-    const {title, background_img, id} = props.board
+    const { id } = props.board.id
+    const {title, background_img} = props.board.attributes
 
     return (
-
-        //note: fix the link for heroku functionality
-        <Card style={{ width: '18rem' }} className="text-center">
-            <Card.Title>{title}</Card.Title>
+        <Card border="dark" style={{ width: '18rem' }} >
+            <Card.Header>{title}</Card.Header>
+            <Card.Img src={`${background_img}`} className="card-image"/>
         </Card>
     )
 }

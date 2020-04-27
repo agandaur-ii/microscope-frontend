@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+/* .card-style {
+  border: darkgoldenrod;
+} */
+
+.card-image {
+  max-width: 90%;
+}
+
+
