@@ -6,12 +6,6 @@ import { api } from '../api';
 
 class MyAccount extends React.Component {
 
-    state = {
-        quizClick: false,
-        scoreClick: false,
-        scores: {},
-    }
-
     componentDidMount() {
         this.populateUserBoards()
     };

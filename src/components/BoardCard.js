@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 
 
 function BoardCard(props) {
-    const {title, background_img, id} = props.quiz
+    const {title, background_img, id} = props.board
 
     return (
 
