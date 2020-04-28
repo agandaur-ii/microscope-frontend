@@ -35,6 +35,11 @@ const createUser = (data) => {
   }).then(res => res.json());
 };
 
+const getBoard = (board_id) => {
+  return fetch(`${API_ROOT}/boards/${board_id}`, {headers: headers()})
+  .then(response => response.json())
+}
+
 const getBoards = () => {
   return fetch(`${API_ROOT}/boards`, {headers: headers()})
   .then(response => response.json())
@@ -49,6 +54,7 @@ export const api = {
       createUser
     },
     boards: {
-      getBoards,
+      getBoard,
+      getBoards
     }
 };

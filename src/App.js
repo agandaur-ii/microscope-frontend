@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { api } from './api';
 import Navi from './containers/Navi';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 import SplashPage from './containers/SplashPage';
 import MyAccount from './containers/MyAccount';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import Board from './components/Board';
 
 import './App.css';
 
@@ -53,6 +54,7 @@ class App extends Component {
     this.setState({
       auth: {user: {}}
     })
+    console.log("GOT HERE")
   }
 
   render() {
@@ -71,7 +73,19 @@ class App extends Component {
 
           <Route
             exact path="/account"
-            render={()=><MyAccount user={this.state.auth.user} myBoards={this.state.allBoards.filter(b => b.user_id === this.state.auth.user.user_id && b.attributes.parent === null) } />}
+            render={()=><MyAccount 
+              user={this.state.auth.user} 
+              myBoards={this.state.allBoards.filter(b => 
+                b.user_id === this.state.auth.user.user_id 
+                //&& b.attributes.parent === null
+                )
+              } 
+            />}
+          />
+
+          <Route
+            path="/account/board/:id"
+            render={(props) => <Board {...props} user={this.state.auth.user} />}
           />
 
         </div>

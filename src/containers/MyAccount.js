@@ -1,14 +1,17 @@
 import React from 'react';
 import AuthHOC from '../HOC/AuthHOC';
 import BoardCard from '../components/BoardCard';
-import { Col, Button, Container} from 'react-bootstrap';
+import { Col, Button, CardGroup} from 'react-bootstrap';
 import { api } from '../api';
 
 class MyAccount extends React.Component {
 
     populateUserBoards = () => {
         return this.props.myBoards.map(thisBoard => {
-            return (<Col><BoardCard key={thisBoard.id} board={thisBoard} /></Col>)
+            return (<Col xs={3} md={4}>
+                        <BoardCard key={thisBoard.id} board={thisBoard} />
+                    </Col>
+            )
         });
     };
 
@@ -22,10 +25,10 @@ class MyAccount extends React.Component {
         return(
             <div>
                 <h4>Hello {first_name}!</h4>
-                <Container>
+                <CardGroup fluid>
                     {this.populateUserBoards()}
-                </Container>
-                <Button onClick={this.newBoard}>Create New Board</Button>
+                </CardGroup>
+                <Button variant="info" onClick={this.newBoard}>Create New Board</Button>
             </div>
         );
     };
