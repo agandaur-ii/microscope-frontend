@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 import SplashPage from './containers/SplashPage';
 import MyAccount from './containers/MyAccount';
 import Board from './components/Board';
+import EditForm from './components/EditForm';
 
 import './App.css';
 
@@ -86,6 +87,11 @@ class App extends Component {
           <Route
             path="/account/board/:id"
             render={(props) => <Board {...props} user={this.state.auth.user} />}
+          />
+
+          <Route
+            path="edit/:id"
+            render={(props) => <EditForm {...props} user={this.state.auth.user}/>}
           />
 
         </div>

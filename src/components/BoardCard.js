@@ -28,14 +28,15 @@ class BoardCard extends Component {
 
         return (
             <>
-                <Card className="text-center" border="dark" style={{ width: '24 rem'}} >
+                <Card className="text-center" border="dark" style={{ width: '25rem', height: '23rem'}} >
                     <Card.Header>{this.props.board.attributes.title}</Card.Header>
                     <Card.Img src={`${this.props.board.attributes.background_img}`} className="card-image"/>
                 </Card>
                 <Button
                     onClick={this.handleClick} 
                     variant="outline-primary" 
-                    size="lg" 
+                    size="lg"
+                    style={{ width: '25rem'}} 
                     type="submit"
                     block
                 >View</Button>

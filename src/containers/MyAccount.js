@@ -25,7 +25,7 @@ class MyAccount extends React.Component {
         return(
             <div>
                 <h4>Hello {first_name}!</h4>
-                <CardGroup fluid>
+                <CardGroup >
                     {this.populateUserBoards()}
                 </CardGroup>
                 <Button variant="info" onClick={this.newBoard}>Create New Board</Button>

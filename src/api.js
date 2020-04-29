@@ -45,6 +45,10 @@ const getBoards = () => {
   .then(response => response.json())
 }
 
+const editBoard = () => {
+  
+}
+
 export const api = {
     auth: {
       login,
@@ -55,6 +59,7 @@ export const api = {
     },
     boards: {
       getBoard,
-      getBoards
+      getBoards,
+      editBoard
     }
 };
