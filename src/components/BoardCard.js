@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom";
 import {Card, Button } from 'react-bootstrap';
 
 
@@ -28,7 +28,7 @@ class BoardCard extends Component {
 
         return (
             <>
-                <Card className="text-center" border="dark" style={{ width: '25rem', height: '23rem'}} >
+                <Card className="text-center" border="dark" style={{ width: '25rem', height: '30rem'}} >
                     <Card.Header>{this.props.board.attributes.title}</Card.Header>
                     <Card.Img src={`${this.props.board.attributes.background_img}`} className="card-image"/>
                 </Card>

@@ -6,17 +6,27 @@ import Button from 'react-bootstrap/Button';
 import { api } from '../api';
 import { Container, Row, Col } from 'react-bootstrap';
 
-class EditForm extends Component {
+class CreateBoardForm extends Component {
     constructor(){
         super();
         this.state = {
             redirect: false,
+            userId: "",
             fields: {
                 title: "",
                 background_img: ""
             }
         };
     };
+
+    componentDidMount() {
+        api.auth.getCurrentUser()
+        .then(data => {
+            this.setState({
+                userId: data.id
+            })
+        })
+    }
 
     handleChange = e => {
         const newFields = {...this.state.fields, [e.target.name]: e.target.value};
@@ -28,12 +38,15 @@ class EditForm extends Component {
     handleSubmit = e => {
         e.preventDefault()
         let boardObject = {
-            id: this.props.match.params.id,
+            user_id: this.state.userId,
             title: this.state.fields.title,
             background_img: this.state.fields.background_img,
         }
 
-        api.boards.editBoard(boardObject)
+        console.log(boardObject.id)
+        console.log("boardObject ID in create board form ^^")
+
+        api.boards.createBoard(boardObject)
         .then(data => {
             this.setState({
                 redirect: true
@@ -43,7 +56,6 @@ class EditForm extends Component {
     
 
     render() {
-
         const {redirect} = this.state
 
         if (redirect) {
@@ -52,6 +64,7 @@ class EditForm extends Component {
 
         return(
             <div>
+            <h3>Create a New Board!</h3>
             <Container>
                 <Row >
                     <Col xs={5}>
@@ -90,4 +103,4 @@ class EditForm extends Component {
     }
 }
 
-export default AuthHOC(EditForm);
+export default AuthHOC(CreateBoardForm);

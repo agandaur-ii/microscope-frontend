@@ -18,7 +18,7 @@ const BoardGrid = props => {
             <Card
                 ref={drop}
                 border={isOver ? 'danger' : 'dark'}
-                style={{ width: '70rem', height: '40rem'}}
+                style={{ width: '70rem', height: '80rem'}}
             >
                 <Card.Img 
                 src={`${props.image}`}
@@ -28,4 +28,4 @@ const BoardGrid = props => {
     )
 }
 
-export default BoardGrid;
+export default BoardGrid; 

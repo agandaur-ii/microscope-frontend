@@ -4,8 +4,10 @@ import Navi from './containers/Navi';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import SplashPage from './containers/SplashPage';
 import MyAccount from './containers/MyAccount';
+import MyBoards from './containers/MyBoards';
 import Board from './components/Board';
 import EditForm from './components/EditForm';
+import CreateBoardForm from './components/CreateBoardForm';
 
 import './App.css';
 
@@ -55,7 +57,6 @@ class App extends Component {
     this.setState({
       auth: {user: {}}
     })
-    console.log("GOT HERE")
   }
 
   render() {
@@ -74,7 +75,12 @@ class App extends Component {
 
           <Route
             exact path="/account"
-            render={()=><MyAccount 
+            render={()=><MyAccount user={this.state.auth.user} />}
+          />
+
+          <Route
+            exact path="/boards"
+            render={()=><MyBoards 
               user={this.state.auth.user} 
               myBoards={this.state.allBoards.filter(b => 
                 b.user_id === this.state.auth.user.user_id 
@@ -90,9 +96,14 @@ class App extends Component {
           />
 
           <Route
-            path="edit/:id"
+            path="/edit/:id"
             render={(props) => <EditForm {...props} user={this.state.auth.user}/>}
           />
+
+          <Route
+            path="/board/create"
+            render={(props) => <CreateBoardForm {...props} user={this.state.auth.user}/>}
+          />    
 
         </div>
       </Router>

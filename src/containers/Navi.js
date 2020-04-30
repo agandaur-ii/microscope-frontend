@@ -10,6 +10,7 @@ function Navi(props) {
     return(
             <div className="navbar">
                 {token ? <Link className="nav-link" to="/account">My Account</Link> : null}
+                {token ? <Link className="nav-link" to="/boards">My Boards</Link> : null}
                 {token ? <Button variant="outline-danger" onClick={props.onLogout}>Logout</Button> 
                 : <LoginForm className="form-group" onAuthenticate={props.onAuthenticate}/>}
             </div>

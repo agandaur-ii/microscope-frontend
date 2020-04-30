@@ -45,8 +45,26 @@ const getBoards = () => {
   .then(response => response.json())
 }
 
-const editBoard = () => {
-  
+const createBoard = (boardObject) => {
+  return fetch(`${API_ROOT}/boards/`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify(boardObject)
+  }).then(res => res.json());
+}
+
+const editBoard = (boardObject) => {
+  return fetch(`${API_ROOT}/boards/${boardObject.id}`, {
+    method: "PATCH",
+    headers: headers(),
+    body: JSON.stringify(boardObject)
+  }).then(res => res.json());
+}
+
+const deleteBoard = (board_id) => {
+  return fetch(`${API_ROOT}/boards/${board_id}`, {
+    method: "DELETE",
+  }).then(res => res.json());
 }
 
 export const api = {
@@ -60,6 +78,8 @@ export const api = {
     boards: {
       getBoard,
       getBoards,
-      editBoard
+      createBoard,
+      editBoard,
+      deleteBoard
     }
 };

@@ -1,34 +1,73 @@
 import React from 'react';
 import AuthHOC from '../HOC/AuthHOC';
-import BoardCard from '../components/BoardCard';
-import { Col, Button, CardGroup} from 'react-bootstrap';
+import { Redirect } from "react-router-dom";
 import { api } from '../api';
+import { Col, Button, } from 'react-bootstrap';
+
 
 class MyAccount extends React.Component {
 
-    populateUserBoards = () => {
-        return this.props.myBoards.map(thisBoard => {
-            return (<Col xs={3} md={4}>
-                        <BoardCard key={thisBoard.id} board={thisBoard} />
-                    </Col>
-            )
-        });
-    };
+    state = {
+        redirect: false,
+        deleteCheck: false,
+        delete: false
+    }
 
-    newBoard = () => {
+    handleEdit = () => {
+        console.log("EDIT")
+        // this.setState({
+        //     redirect: true
+        // })
+    }
 
+    handleDelete = () => {
+        this.setState({
+            deleteCheck: true
+        })
+    }
+
+    handleGoBack = () => {
+        this.setState({
+            deleteCheck: false
+        })
+    }
+
+    handleActualDelete = () => {
+        console.log("DELETE")
+        // api.boards.deleteBoard(this.state.board.id)
+        // .then(data => {
+        //     if (data.message) {
+        //         alert(`${data.message}`)
+        //     } else {
+        //         this.setState({
+        //             delete: true
+        //         })
+        //     }
+        // })
     }
 
     render() {
-        const { first_name } = this.props.user;
+        const {redirect} = this.state;
+
+        if (redirect) {
+            return <Redirect to='/'/>
+        }
 
         return(
             <div>
-                <h4>Hello {first_name}!</h4>
-                <CardGroup >
-                    {this.populateUserBoards()}
-                </CardGroup>
-                <Button variant="info" onClick={this.newBoard}>Create New Board</Button>
+                <h4>Account Info</h4>
+                <h5>First Name: {this.props.user.first_name}</h5>
+                <h5>Last Name: {this.props.user.last_name}</h5>
+                <h5>Username: {this.props.user.username}</h5>
+                <Button onClick={this.handleEdit}type="submit">Edit</Button>
+                {this.state.deleteCheck ? 
+                    <>
+                        <Button variant="secondary" onClick={this.handleGoBack} type="submit ">Keep account</Button>
+                        <Button variant="danger" onClick={this.handleActualDelete} type="submit ">Confirm Deletion</Button>
+                    </>
+                    :
+                    <Button variant="danger" onClick={this.handleDelete} type="submit ">Delete</Button>
+                    }
             </div>
         );
     };
