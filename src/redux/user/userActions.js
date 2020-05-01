@@ -3,7 +3,6 @@ import {
     FETCH_USER_REQUEST,
     FETCH_USER_SUCESS,
     FETCH_USER_FAILURE,
-    POST_NEW_USER
 } from "./userTypes";
 
 export const fetchUserRequest = () => {
@@ -23,13 +22,6 @@ export const fetchUserFailure = (error) => {
     return {
         type: FETCH_USER_FAILURE,
         error: error
-    }
-}
-
-export const postNewUserSuccess = (newUser) => {
-    return {
-        type: POST_NEW_USER,
-        payload: newUser
     }
 }
 
