@@ -6,12 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DndProvider } from 'react-dnd';
 import Backend from 'react-dnd-html5-backend';
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DndProvider backend={Backend}>
-      <App />
-    </DndProvider>
+    <Provider store={store}>
+      <DndProvider backend={Backend}>
+        <App />
+      </DndProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

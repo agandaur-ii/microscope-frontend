@@ -8,8 +8,9 @@ import MyBoards from './containers/MyBoards';
 import Board from './components/Board';
 import EditForm from './components/EditForm';
 import CreateBoardForm from './components/CreateBoardForm';
-
 import './App.css';
+import store from './redux/store';
+import { fetchBoards } from './redux'
 
 class App extends Component {
 
@@ -18,14 +19,12 @@ class App extends Component {
     this.state = {
       auth: {
         user: {}
-      },
-      allBoards: [] 
+      }
     }
   };
 
   componentDidMount() {
-    this.getBoards()
-
+    fetchBoards()(store.dispatch)
   }
   
   onUnmount = () => {
@@ -34,15 +33,6 @@ class App extends Component {
   
   componentWillUnmount() {
     this.onUnmount();
-  }
-
-  getBoards = () => {
-    api.boards.getBoards()
-    .then(data => {
-      this.setState({
-        allBoards: data.data
-      })
-    })
   }
 
   authenticateUser(data){
@@ -82,11 +72,6 @@ class App extends Component {
             exact path="/boards"
             render={()=><MyBoards 
               user={this.state.auth.user} 
-              myBoards={this.state.allBoards.filter(b => 
-                b.user_id === this.state.auth.user.user_id 
-                //&& b.attributes.parent === null
-                )
-              } 
             />}
           />
 

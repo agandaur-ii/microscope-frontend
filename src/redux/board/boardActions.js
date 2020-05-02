@@ -4,7 +4,7 @@ import {
     FETCH_BOARDS_FAILURE,
     POST_BOARD,
 } from "./boardTypes";
-import {api} from '../api'
+import { api } from '../../api'
 
 export const fetchBoardsRequest= () => {
     return {

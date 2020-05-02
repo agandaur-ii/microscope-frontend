@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { api } from '../api';
 import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { postBoard } from '../redux';
 
 class CreateBoardForm extends Component {
     constructor(){
@@ -103,4 +105,17 @@ class CreateBoardForm extends Component {
     }
 }
 
-export default AuthHOC(CreateBoardForm);
+// const mapStateToProps = state => {
+//     return {
+
+//     }
+// }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onCreateBoard: (newBoard) => dispatch(postBoard(newBoard))
+    }
+    //pass in appropraite object to onCreateBoard in handleSubmit
+}
+
+export default AuthHOC(connect(null, mapDispatchToProps)(CreateBoardForm));

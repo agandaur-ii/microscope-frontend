@@ -1,7 +1,7 @@
-import { api } from './api';
+import { api } from '../../api';
 import {
     FETCH_USER_REQUEST,
-    FETCH_USER_SUCESS,
+    FETCH_USER_SUCCESS,
     FETCH_USER_FAILURE,
 } from "./userTypes";
 
@@ -13,7 +13,7 @@ export const fetchUserRequest = () => {
 
 export const fetchUserSuccess = (user) => {
     return {
-        type: FETCH_USER_SUCESS,
+        type: FETCH_USER_SUCCESS,
         payload: user
     }
 }
