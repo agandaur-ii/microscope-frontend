@@ -13,27 +13,25 @@ class MyBoards extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.user)
-        console.log("props from My Boards ^^")
+        console.log(this.props.allBoards.data)
     }
 
+    myBoards = () => {
+        return this.props.allBoards.data.filter(board => 
+            board.attributes.user_id === this.props.user.id
+            && 
+            board.attributes.parent === null
+        )
+    }
 
-    // myBoards={this.state.allBoards.filter(b => 
-    //     b.user_id === this.state.auth.user.user_id 
-    //     && b.attributes.parent === null
-    //     )
-    //   } 
-
-    //filter boards before getting here
-
-    // populateUserBoards = () => {
-    //     return this.props.myBoards.map(thisBoard => {
-    //         return (<Col xs={3} md={4}>
-    //                     <BoardCard key={thisBoard.id} board={thisBoard} />
-    //                 </Col>
-    //         )
-    //     });
-    // };
+    populateUserBoards = () => {
+        return this.myBoards().map(thisBoard => {
+            return (<Col xs={3} md={4} key={thisBoard.id}>
+                        <BoardCard board={thisBoard} />
+                    </Col>
+            )
+        });
+    };
 
     newBoard = () => {
         this.setState({
@@ -53,7 +51,7 @@ class MyBoards extends React.Component {
             <div>
                 <h4>Hello {this.props.user.first_name}!</h4>
                 <CardGroup >
-                    {/* {this.populateUserBoards()} */}
+                    {this.populateUserBoards()}
                 </CardGroup>
                 <Button variant="info" onClick={this.newBoard}>Create New Board</Button>
             </div>
@@ -63,7 +61,7 @@ class MyBoards extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        myBoards: state.boards
+        allBoards: state.boards.boards
     }
 }
 
