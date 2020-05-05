@@ -3,7 +3,17 @@ import {
     FETCH_USER_REQUEST,
     FETCH_USER_SUCCESS,
     FETCH_USER_FAILURE,
+    SET_USER,
+    LOGOUT,
+    DELETE_USER
 } from "./userTypes";
+
+export const fetchUser = () => {
+    return (dispatch) => {
+        dispatch(fetchUserRequest())
+        //api.auth
+    }
+}
 
 export const fetchUserRequest = () => {
     return {
@@ -25,9 +35,15 @@ export const fetchUserFailure = (error) => {
     }
 }
 
-export const fetchUser = () => {
-    return (dispatch) => {
-        dispatch(fetchUserRequest())
-        //api.auth
+export const setUser = (user) => {
+    return {
+        type: SET_USER,
+        payload: user
+    }
+}
+
+export const logoutUser = () => {
+    return {
+        type: LOGOUT
     }
 }

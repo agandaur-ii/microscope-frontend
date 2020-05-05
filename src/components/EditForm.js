@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthHOC from '../HOC/AuthHOC';
+import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -90,4 +90,4 @@ class EditForm extends Component {
     }
 }
 
-export default AuthHOC(EditForm);
+export default composedAuthHOC(EditForm);

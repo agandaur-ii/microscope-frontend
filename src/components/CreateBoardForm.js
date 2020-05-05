@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthHOC from '../HOC/AuthHOC';
+import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -21,15 +21,6 @@ class CreateBoardForm extends Component {
         };
     };
 
-    componentDidMount() {
-        api.auth.getCurrentUser()
-        .then(data => {
-            this.setState({
-                userId: data.id
-            })
-        })
-    }
-
     handleChange = e => {
         const newFields = {...this.state.fields, [e.target.name]: e.target.value};
         this.setState({
@@ -39,13 +30,15 @@ class CreateBoardForm extends Component {
     
     handleSubmit = e => {
         e.preventDefault()
+        console.log(this.props.user)
+        console.log("user from state^^")
         let boardObject = {
-            user_id: this.state.userId,
+            user_id: this.props.user.id,
             title: this.state.fields.title,
             background_img: this.state.fields.background_img,
         }
 
-        console.log(boardObject.id)
+        console.log(boardObject)
         console.log("boardObject ID in create board form ^^")
 
         api.boards.createBoard(boardObject)
@@ -105,11 +98,11 @@ class CreateBoardForm extends Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        user: state.user.user
+    }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -118,4 +111,4 @@ const mapDispatchToProps = dispatch => {
     //pass in appropraite object to onCreateBoard in handleSubmit
 }
 
-export default AuthHOC(connect(null, mapDispatchToProps)(CreateBoardForm));
+export default composedAuthHOC(connect(mapStateToProps, mapDispatchToProps)(CreateBoardForm)); 

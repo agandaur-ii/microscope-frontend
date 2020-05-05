@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { api } from '../api';
-import { Redirect } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
+import { setUser } from '../redux';
 
 class LoginForm extends Component {
     constructor(){
@@ -63,4 +64,11 @@ class LoginForm extends Component {
         )
     }
 };
-export default LoginForm;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuthenticate: (newUser) => dispatch(setUser(newUser))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LoginForm);

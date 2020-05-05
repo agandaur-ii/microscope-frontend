@@ -2,19 +2,32 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
+import { connect } from 'react-redux';
+import { logoutUser } from '../redux';
 
 function Navi(props) {
-    // use token value (true || false to determine which links to show.)
-    const token = localStorage.getItem("token")
+    const token = props.user.token
 
     return(
             <div className="navbar">
                 {token ? <Link className="nav-link" to="/account">My Account</Link> : null}
                 {token ? <Link className="nav-link" to="/boards">My Boards</Link> : null}
                 {token ? <Button variant="outline-danger" onClick={props.onLogout}>Logout</Button> 
-                : <LoginForm className="form-group" onAuthenticate={props.onAuthenticate}/>}
+                : <LoginForm className="form-group" />}
             </div>
      )
 };
 
-export default Navi;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(logoutUser())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navi); 

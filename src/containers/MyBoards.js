@@ -1,5 +1,5 @@
 import React from 'react';
-import AuthHOC from '../HOC/AuthHOC';
+import composedAuthHOC from '../HOC/AuthHOC';
 import BoardCard from '../components/BoardCard';
 import { Redirect } from "react-router-dom";
 import { Col, Button, CardGroup} from 'react-bootstrap';
@@ -10,10 +10,6 @@ class MyBoards extends React.Component {
 
     state = {
         redirect: false,
-    }
-
-    componentDidMount() {
-        console.log(this.props.allBoards.data)
     }
 
     myBoards = () => {
@@ -61,8 +57,10 @@ class MyBoards extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        allBoards: state.boards.boards
+        allBoards: state.boards.boards,
+        user: state.user.user
     }
 }
 
-export default AuthHOC(connect(mapStateToProps)(MyBoards));
+
+export default composedAuthHOC(connect(mapStateToProps)(MyBoards));

@@ -1,23 +1,23 @@
 import React from 'react';
-import AuthHOC from '../HOC/AuthHOC';
+import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom";
 import { api } from '../api';
-import { Col, Button, } from 'react-bootstrap';
-
+import { Button, } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { logoutUser } from '../redux';
 
 class MyAccount extends React.Component {
 
     state = {
-        redirect: false,
+        edit: false,
         deleteCheck: false,
-        delete: false
+        deleted: false
     }
 
     handleEdit = () => {
-        console.log("EDIT")
-        // this.setState({
-        //     redirect: true
-        // })
+        this.setState({
+            edit: true
+        })
     }
 
     handleDelete = () => {
@@ -33,23 +33,27 @@ class MyAccount extends React.Component {
     }
 
     handleActualDelete = () => {
-        console.log("DELETE")
-        // api.boards.deleteBoard(this.state.board.id)
-        // .then(data => {
-        //     if (data.message) {
-        //         alert(`${data.message}`)
-        //     } else {
-        //         this.setState({
-        //             delete: true
-        //         })
-        //     }
-        // })
+        api.user.deleteUser(this.props.user.id)
+        .then(data => {
+            if (data.message) {
+                alert(`${data.message}`)
+            } else {
+                this.props.onLogout()
+                this.setState({
+                    deleted: true
+                })
+            }
+        })
     }
 
     render() {
-        const {redirect} = this.state;
+        const {edit, deleted} = this.state;
 
-        if (redirect) {
+        if (edit) {
+            return <Redirect to={`/account_edit/${this.props.user.id}`}/>
+        }
+
+        if (deleted) {
             return <Redirect to='/'/>
         }
 
@@ -73,4 +77,16 @@ class MyAccount extends React.Component {
     };
 };
 
-export default AuthHOC(MyAccount);
+const mapStateToProps = state => {
+    return {
+        user: state.user.user
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(logoutUser())
+    }
+}
+
+export default composedAuthHOC(connect(mapStateToProps, mapDispatchToProps)(MyAccount));

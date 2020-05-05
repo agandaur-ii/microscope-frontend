@@ -1,5 +1,6 @@
 import React from 'react';
 import SignUp from './SignUp';
+import { connect } from 'react-redux';
 
 function SplashPage(props) {
     return(
@@ -10,4 +11,10 @@ function SplashPage(props) {
     );
 };
 
-export default SplashPage;
+const mapStateToProps = state => {
+    return {
+        token: state.user.user.token
+    }
+}
+
+export default connect(mapStateToProps)(SplashPage);

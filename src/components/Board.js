@@ -1,35 +1,22 @@
 import React, { Component } from 'react';
-import AuthHOC from '../HOC/AuthHOC';
+import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom"
 import { api } from '../api';
 import { Button } from 'react-bootstrap';
 import BoardGrid from './BoardGrid';
 import Icon from './Icon';
+import { connect } from 'react-redux';
 
 class Board extends Component {
     constructor() {
         super();
         this.state ={
-            board: {},
             edit: false,
             delete: false,
             deleteCheck: false,
             add_icon: false
         }
     };
-
-    componentDidMount() {
-        this.getBoard(this.props)
-    }
-
-    getBoard = (props) => {
-        api.boards.getBoard(props.match.params.id)
-        .then(data => {
-            this.setState({
-                board: data.data.attributes
-            })
-        })
-    }
 
     handleEdit = () => {
         this.setState({
@@ -50,7 +37,7 @@ class Board extends Component {
     }
 
     handleActualDelete = () => {
-        api.boards.deleteBoard(this.state.board.id)
+        api.boards.deleteBoard(this.props.match.params.id)
         .then(data => {
             if (data.message) {
                 alert(`${data.message}`)
@@ -79,7 +66,7 @@ class Board extends Component {
 
         if (edit) {
             return <Redirect to={{
-                pathname: `/edit/${this.props.match.params.id}`,
+                pathname: `/edit/board/${this.props.match.params.id}`,
                 state: this.state.board
             }}/>
         }
@@ -88,10 +75,14 @@ class Board extends Component {
             return <Redirect to="/boards"/>
         }
 
+        const thisBoard = this.props.boards
+        .find(board => 
+            board.id === this.props.match.params.id
+        )
 
         return (
             <div>
-                <h2>{this.state.board.title}</h2>
+                <h2>{thisBoard.attributes.title}</h2>
                 <div>
                     {this.state.add_icon ?
                     <Button variant="info" onClick={this.handleDoneEditting} type="submit">Done Adding Icons</Button>
@@ -101,7 +92,7 @@ class Board extends Component {
                     {this.state.add_icon ? <div>"Drag Me!"<Icon /></div>: null}
                 </div>
                 <div>
-                    <BoardGrid image={this.state.board.background_img}/>
+                    <BoardGrid image={thisBoard.attributes.background_img}/>
                 </div>
                 <div>
                     <Button onClick={this.handleEdit}type="submit ">Edit</Button>
@@ -120,4 +111,10 @@ class Board extends Component {
     }
 }
 
-export default AuthHOC(Board);
+const mapStateToProps = state => {
+    return {
+        boards: state.boards.boards.data
+    }
+}
+
+export default composedAuthHOC(connect(mapStateToProps)(Board));

@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
+import composedAuthHOC from '../HOC/AuthHOC';
+import { Redirect } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { api } from '../api';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-class SignUp extends Component {
+class AccountEdit extends Component {
     constructor(){
         super();
         this.state = {
-            errors: false,
+            redirect: false,
             fields: {
+                id: "",
                 first_name: "",
                 last_name: "",
-                username: "",
-                password: "",
-                verifyPassword: ""
+                username: ""
             }
         };
     };
+
+    componentDidMount() {
+        this.setState({
+            fields: {
+                id: this.props.user.id,
+                first_name: this.props.user.first_name,
+                last_name: this.props.user.last_name,
+                username: this.props.user.username
+            }
+        })
+    }
 
     handleChange = e => {
         const newFields = {...this.state.fields, [e.target.name]: e.target.value};
@@ -30,28 +42,31 @@ class SignUp extends Component {
     handleSubmit = e => {
         e.preventDefault()
         let userObject = {
+            id: this.state.fields.id,
             first_name: this.state.fields.first_name,
             last_name: this.state.fields.last_name,
-            username: this.state.fields.username,
-            password: this.state.fields.password
+            username: this.state.fields.username
         }
-        e.preventDefault();
-        if (this.state.fields.password !== this.state.fields.verifyPassword) {
-            alert("Passwords do not match. Please try again.")
-        } else {
-            api.user.createUser(userObject)
-            .then(data => {
-                if (data.message) {
-                    alert(`${data.message}`)
-                } else {
-                    alert("Account creation succesful. Log in with your new credentials.")
-                }
+
+        api.user.editUser(userObject)
+        .then(data => {
+            this.setState({
+                redirect: true
             })
-        };
-    }
+        })
+    };
+    
 
     render() {
+
+        const {redirect} = this.state
+
+        if (redirect) {
+            return <Redirect to='/boards'/>
+        }
+
         return(
+            <div>
             <Container>
                 <Row >
                     <Col xs={5}>
@@ -62,7 +77,6 @@ class SignUp extends Component {
                                 </Form.Label>
                                 <Form.Control 
                                     name="first_name" 
-                                    placeholder="First Name" 
                                     onChange={this.handleChange}
                                     type="text" 
                                     value={this.state.fields.first_name}
@@ -74,7 +88,6 @@ class SignUp extends Component {
                                 </Form.Label>
                                 <Form.Control 
                                     name="last_name" 
-                                    placeholder="Last Name" 
                                     onChange={this.handleChange}
                                     type="text" 
                                     value={this.state.fields.last_name}
@@ -86,41 +99,17 @@ class SignUp extends Component {
                                 </Form.Label>
                                 <Form.Control 
                                     name="username" 
-                                    placeholder="New Username" 
                                     onChange={this.handleChange}
                                     type="text" 
                                     value={this.state.fields.username}
                                     />
                             </Form.Group>
-                            <Form.Group>
-                                <Form.Label>
-                                    Password:
-                                </Form.Label>
-                                <Form.Control 
-                                    name="password"
-                                    onChange={this.handleChange}
-                                    placeholder="Password" 
-                                    type="password" 
-                                    value={this.state.fields.password}
-                                    />
-                            </Form.Group>
-                            <Form.Group >
-                                <Form.Label>
-                                    Verify Password:
-                                </Form.Label>
-                                <Form.Control 
-                                name="verifyPassword"
-                                onChange={this.handleChange}
-                                placeholder="Password"
-                                value={this.state.fields.verifyPassword}
-                                type="password"
-                                />
-                            </Form.Group>
-                            <Button type="submit" variant="primary">Sign Up</Button>
+                            <Button type="submit" variant="primary">Submit Changes</Button>
                         </Form>
                     </Col>
                 </Row>
             </Container>
+            </div>
         )
     }
 }
@@ -131,4 +120,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(SignUp); 
+export default composedAuthHOC(connect(mapStateToProps)(AccountEdit));

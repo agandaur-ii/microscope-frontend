@@ -64,6 +64,24 @@ const editBoard = (boardObject) => {
 const deleteBoard = (board_id) => {
   return fetch(`${API_ROOT}/boards/${board_id}`, {
     method: "DELETE",
+    headers: headers(),
+  }).then(res => res.json());
+}
+
+const editUser = (userObject) => {
+  console.log(userObject)
+  console.log("userObject from API^^")
+  return fetch(`${API_ROOT}/users/${userObject.id}`, {
+    method: "PATCH",
+    headers: headers(),
+    body: JSON.stringify(userObject)
+  }).then(res => res.json());
+}
+
+const deleteUser = (user_id) => {
+  return fetch(`${API_ROOT}/users/${user_id}`, {
+    method: "DELETE",
+    headers: headers(),
   }).then(res => res.json());
 }
 
@@ -73,7 +91,9 @@ export const api = {
       getCurrentUser
     },
     user: {
-      createUser
+      createUser,
+      editUser,
+      deleteUser
     },
     boards: {
       getBoard,

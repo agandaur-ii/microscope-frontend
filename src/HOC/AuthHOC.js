@@ -1,10 +1,12 @@
-import React from 'react'
-import {Redirect} from 'react-router-dom'
+import React from 'react';
+import {Redirect} from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
-const AuthHOC = WrappedComponent => {
+const AuthHOC = (WrappedComponent, ) => {
     return class AuthHOC extends React.Component {
         isAuthorized = () => {
-            if (localStorage.getItem("token")) {
+            if (this.props.token) {
                 return true
             } else {
                 return false
@@ -13,7 +15,8 @@ const AuthHOC = WrappedComponent => {
 
         render() {
             return (
-                <> {this.isAuthorized()
+                <> 
+                    {this.isAuthorized()
                     ?<WrappedComponent {...this.props} />
                     :<Redirect to="/" />}
                 </>
@@ -22,4 +25,15 @@ const AuthHOC = WrappedComponent => {
     }
 }
 
-export default AuthHOC;
+const mapStateToProps = state => {
+    return {
+        token: state.user.token
+    }
+}
+
+const composedAuthHOC = compose(
+    connect(mapStateToProps, null),
+    AuthHOC
+)
+
+export default composedAuthHOC;
