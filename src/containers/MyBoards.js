@@ -13,8 +13,8 @@ class MyBoards extends React.Component {
     }
 
     myBoards = () => {
-        return this.props.allBoards.data.filter(board => 
-            board.attributes.user_id === this.props.user.id
+        return this.props.allBoards.boards.filter(board => 
+            board.attributes.user_id === this.props.user.attributes.id
             && 
             board.attributes.parent === null
         )
@@ -42,6 +42,9 @@ class MyBoards extends React.Component {
             return <Redirect to='/board/create'/>
         }
 
+        if (this.props.allBoards.loading) {
+            return <h3>Please Hold</h3>
+        }
 
         return(
             <div>
@@ -57,8 +60,8 @@ class MyBoards extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        allBoards: state.boards.boards,
-        user: state.user.user
+        allBoards: state.boards,
+        user: state.user.user.data
     }
 }
 

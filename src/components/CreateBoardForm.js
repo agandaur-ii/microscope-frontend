@@ -3,7 +3,6 @@ import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { api } from '../api';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { postBoard } from '../redux';
@@ -30,22 +29,15 @@ class CreateBoardForm extends Component {
     
     handleSubmit = e => {
         e.preventDefault()
-        console.log(this.props.user)
-        console.log("user from state^^")
         let boardObject = {
             user_id: this.props.user.id,
             title: this.state.fields.title,
             background_img: this.state.fields.background_img,
         }
 
-        console.log(boardObject)
-        console.log("boardObject ID in create board form ^^")
-
-        api.boards.createBoard(boardObject)
-        .then(data => {
-            this.setState({
-                redirect: true
-            })
+        this.props.onCreateBoard(boardObject)
+        this.setState({
+            redirect: true
         })
     };
     
@@ -106,9 +98,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onCreateBoard: (newBoard) => dispatch(postBoard(newBoard))
+        onCreateBoard: (newBoard) => dispatch(postBoard(newBoard)) 
     }
-    //pass in appropraite object to onCreateBoard in handleSubmit
 }
 
 export default composedAuthHOC(connect(mapStateToProps, mapDispatchToProps)(CreateBoardForm)); 

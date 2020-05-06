@@ -69,8 +69,6 @@ const deleteBoard = (board_id) => {
 }
 
 const editUser = (userObject) => {
-  console.log(userObject)
-  console.log("userObject from API^^")
   return fetch(`${API_ROOT}/users/${userObject.id}`, {
     method: "PATCH",
     headers: headers(),

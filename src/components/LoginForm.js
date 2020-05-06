@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { api } from '../api';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
-import { setUser } from '../redux';
+import { fetchUser } from '../redux';
 
 class LoginForm extends Component {
     constructor(){
         super();
         this.state = {
-            error: false,
             fields: {
                 username: "",
                 password: ""
@@ -17,17 +15,7 @@ class LoginForm extends Component {
     };
 
     actualLogin(fields) {
-        api.auth.login(fields).then(data => {
-            if (data.error) {
-                this.setState({
-                    error: data.error
-                }, 
-                () => alert(this.state.error))
-            } else {
-            localStorage.setItem("token", data.jwt);
-            this.props.onAuthenticate(data);
-            }
-        })
+        this.props.onAuthenticate(this.state.fields);
     };
 
     handleChange = (e) => {
@@ -67,7 +55,7 @@ class LoginForm extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuthenticate: (newUser) => dispatch(setUser(newUser))
+        onAuthenticate: (fields) => dispatch(fetchUser(fields))
     }
 }
 

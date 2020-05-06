@@ -79,7 +79,7 @@ class MyAccount extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user.user
+        user: state.user.user.data.attributes
     }
 }
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom"
-import { api } from '../api';
 import { Button } from 'react-bootstrap';
 import BoardGrid from './BoardGrid';
 import Icon from './Icon';
 import { connect } from 'react-redux';
+import { deleteBoard } from '../redux';
 
 class Board extends Component {
     constructor() {
@@ -37,15 +37,9 @@ class Board extends Component {
     }
 
     handleActualDelete = () => {
-        api.boards.deleteBoard(this.props.match.params.id)
-        .then(data => {
-            if (data.message) {
-                alert(`${data.message}`)
-            } else {
-                this.setState({
-                    delete: true
-                })
-            }
+        this.props.onDelete(this.props.match.params.id)
+        this.setState({
+            delete: true
         })
     }
 
@@ -75,8 +69,11 @@ class Board extends Component {
             return <Redirect to="/boards"/>
         }
 
-        const thisBoard = this.props.boards
-        .find(board => 
+        if (this.props.allBoards.loading) {
+            return <h3>Please Hold</h3>
+        }
+
+        const thisBoard = this.props.boards.find(board => 
             board.id === this.props.match.params.id
         )
 
@@ -113,8 +110,15 @@ class Board extends Component {
 
 const mapStateToProps = state => {
     return {
-        boards: state.boards.boards.data
+        allBoards: state.boards,
+        boards: state.boards.boards
     }
 }
 
-export default composedAuthHOC(connect(mapStateToProps)(Board));
+const mapDispatchToProps = dispatch => {
+    return {
+        onDelete: (id) => dispatch(deleteBoard(id))
+    }
+}
+
+export default composedAuthHOC(connect(mapStateToProps, mapDispatchToProps)(Board));

@@ -3,7 +3,8 @@ import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { api } from '../api';
+import { connect } from 'react-redux';
+import { editBoard } from '../redux';
 import { Container, Row, Col } from 'react-bootstrap';
 
 class EditForm extends Component {
@@ -33,11 +34,9 @@ class EditForm extends Component {
             background_img: this.state.fields.background_img,
         }
 
-        api.boards.editBoard(boardObject)
-        .then(data => {
-            this.setState({
-                redirect: true
-            })
+        this.props.onSubmit(boardObject)
+        this.setState({
+            redirect: true
         })
     };
     
@@ -90,4 +89,10 @@ class EditForm extends Component {
     }
 }
 
-export default composedAuthHOC(EditForm);
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubmit: (boardObject) => dispatch(editBoard(boardObject))
+    }
+}
+
+export default composedAuthHOC(connect(null, mapDispatchToProps)(EditForm));

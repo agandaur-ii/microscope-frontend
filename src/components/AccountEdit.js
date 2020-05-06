@@ -3,9 +3,9 @@ import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { api } from '../api';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { editUser } from '../redux';
 
 class AccountEdit extends Component {
     constructor(){
@@ -47,12 +47,10 @@ class AccountEdit extends Component {
             last_name: this.state.fields.last_name,
             username: this.state.fields.username
         }
+        this.props.onSubmit(userObject)
 
-        api.user.editUser(userObject)
-        .then(data => {
-            this.setState({
-                redirect: true
-            })
+        this.setState({
+            redirect: true
         })
     };
     
@@ -116,8 +114,14 @@ class AccountEdit extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user.user
+        user: state.user.user.data.attributes
     }
 }
 
-export default composedAuthHOC(connect(mapStateToProps)(AccountEdit));
+const mapDispatchToProps = dispatch => {
+    return {
+        onSubmit: (userObject) => dispatch(editUser(userObject))
+    }
+}
+
+export default composedAuthHOC(connect(mapStateToProps, mapDispatchToProps)(AccountEdit));

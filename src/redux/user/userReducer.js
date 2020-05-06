@@ -1,7 +1,8 @@
 import {
     FETCH_USER_REQUEST,
     FETCH_USER_SUCCESS,
-    SET_USER,
+    EDIT_USER_REQUEST,
+    EDIT_USER_SUCCESS,
     LOGOUT,
 } from "./userTypes";
 
@@ -11,12 +12,14 @@ const initialState = {
     token: false
 }
 
-const boardReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_USER_REQUEST:
             return {
                 ...state,
-                loading: true
+                user: {},
+                loading: true,
+                token: false
             }
         case FETCH_USER_SUCCESS:
             return {
@@ -25,12 +28,19 @@ const boardReducer = (state = initialState, action) => {
                 user: action.payload.user,
                 token: action.payload.jwt
             }
-        case SET_USER:
+        case EDIT_USER_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                user: {...state.user},
+                token: localStorage.getItem("token")
+            }
+        case EDIT_USER_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                user: action.payload.user,
-                token: action.payload.jwt
+                user: action.payload,
+                token: localStorage.getItem("token")
             }
         case LOGOUT:
             localStorage.removeItem("token")
@@ -45,4 +55,4 @@ const boardReducer = (state = initialState, action) => {
     }
 }
 
-export default boardReducer;
+export default userReducer;
