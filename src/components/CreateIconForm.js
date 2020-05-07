@@ -50,7 +50,7 @@ class CreateIconForm extends Component {
         const {redirect} = this.state
 
         if (redirect) {
-            return <Redirect to={{pathname: '/boards'}}/>
+            return <Redirect to={{pathname: `/account/board/${this.props.location.state.boardId}`}}/>
         }
 
         return(
