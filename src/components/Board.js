@@ -85,7 +85,7 @@ class Board extends Component {
 
         const thisBoard = this.props.boards.find(board => 
             board.id === this.props.match.params.id
-        )
+        ) 
 
         return (
             <Container >

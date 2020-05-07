@@ -15,7 +15,7 @@ class SplashPage extends Component {
 
         return(
             <div>
-                <h1>Welcome to Microscope!</h1>
+                <h2>Welcome to Microscope!</h2>
                 <SignUp />
             </div>
         )
