@@ -44,7 +44,7 @@ class MyBoards extends React.Component {
         }
 
         if (this.props.allBoards.loading) {
-            return <h3>Please Hold</h3>
+            return <h5>Please Hold</h5>
         }
 
         if (this.props.icons.loading) {
@@ -55,7 +55,7 @@ class MyBoards extends React.Component {
 
         return(
             <div>
-                <h4>Hello {this.props.user.attributes.first_name}!</h4>
+                <h4><em>Hello {this.props.user.attributes.first_name}!</em></h4>
                 <CardGroup >
                 <Row>
                     {this.populateUserBoards()}

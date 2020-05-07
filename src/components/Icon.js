@@ -37,7 +37,8 @@ class Icon extends Component {
     render() {
         const {bodies} = this.props.thisIcon.attributes
         return (
-            <Card 
+            <Card
+                className="border-secondary mb-3" 
                 onClick={this.handleClick} 
                 onMouseEnter={this.handleHoverOver} 
                 onMouseLeave={this.handleHoverAway}
@@ -55,7 +56,7 @@ class Icon extends Component {
                 }
                 {this.state.reveal && this.state.hover ?
                 <> 
-                    <Button variant="danger" onClick={this.handleDelete}type="submit">Delete</Button>
+                    <Button variant="outline-danger" onClick={this.handleDelete}type="submit">Delete</Button>
                 </>    
                 :
                 null

@@ -37,4 +37,10 @@
   }
 }
 
+body {
+  background-color: rgb(252, 251, 248) !important;
+}
 
+.card {
+  background-color: #f7f4f4 !important;
+}

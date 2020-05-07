@@ -94,14 +94,14 @@ class Board extends Component {
                     <h2>{thisBoard.attributes.title}</h2>
                     <BoardGridDrag image={thisBoard.attributes.background_img}/>
                 <div>
-                    <Button onClick={this.handleEdit}type="submit ">Edit</Button>
+                    <Button variant="outline-primary" onClick={this.handleEdit}type="submit ">Edit</Button>
                     {this.state.deleteCheck ? 
                     <>
                         <Button variant="secondary" onClick={this.handleGoBack} type="submit ">Keep this board</Button>
                         <Button variant="danger" onClick={this.handleActualDelete} type="submit ">Confirm Deletion</Button>
                     </>
                     :
-                    <Button variant="danger" onClick={this.handleDelete} type="submit ">Delete</Button>
+                    <Button variant="outline-danger" onClick={this.handleDelete} type="submit ">Delete</Button>
                     }
                 </div>
                 </Col>

@@ -28,9 +28,12 @@ class BoardCard extends Component {
 
         return (
             <>
-                <Card className="text-center" border="dark" style={{ width: '25rem', height: '25rem'}}>
-                    <Card.Header>{this.props.board.attributes.title}</Card.Header>
-                    <Card.Img src={`${this.props.board.attributes.background_img}`} className="card-image"/>
+                <Card className="text-center card border-dark mb-3" style={{ width: '25rem', maxheight: '25rem'}}>
+                    <Card.Header >{this.props.board.attributes.title}</Card.Header>
+                    <Card.Img src={`${this.props.board.attributes.background_img}`}
+                        className="card-image"
+                        //style={{ height: '100%', maxheight: '25rem', width: '100%', maxwidth: '25rem' }}
+                    />
 
                 </Card>
                 <Button
