@@ -5,32 +5,22 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { editUser } from '../redux';
+import { postIcon } from '../redux';
 
-class AccountEdit extends Component {
+class CreateIconForm extends Component {
     constructor(){
         super();
         this.state = {
             redirect: false,
+            boardId: "",
             fields: {
-                id: "",
-                first_name: "",
-                last_name: "",
-                username: ""
+                title: "",
+                description: "",
+                type: "image",
+                content: ""
             }
         };
     };
-
-    componentDidMount() {
-        this.setState({
-            fields: {
-                id: this.props.user.id,
-                first_name: this.props.user.first_name,
-                last_name: this.props.user.last_name,
-                username: this.props.user.username
-            }
-        })
-    }
 
     handleChange = e => {
         const newFields = {...this.state.fields, [e.target.name]: e.target.value};
@@ -41,14 +31,15 @@ class AccountEdit extends Component {
     
     handleSubmit = e => {
         e.preventDefault()
-        let userObject = {
-            id: this.state.fields.id,
-            first_name: this.state.fields.first_name,
-            last_name: this.state.fields.last_name,
-            username: this.state.fields.username
+        let iconObject = {
+            board_id: this.props.location.state.boardId,
+            title: this.state.fields.title,
+            description: this.state.fields.description,
+            type: this.state.fields.type,
+            content: this.state.fields.content
         }
-        this.props.onSubmit(userObject)
 
+        this.props.onCreateIcon(iconObject)
         this.setState({
             redirect: true
         })
@@ -56,50 +47,53 @@ class AccountEdit extends Component {
     
 
     render() {
-
         const {redirect} = this.state
 
         if (redirect) {
-            return <Redirect to='/account'/>
+            return <Redirect to={{pathname: '/boards'}}/>
         }
 
         return(
             <div>
+            <h3>Create a New Icon!</h3>
             <Container>
                 <Row >
                     <Col xs={5}>
                         <Form onSubmit={e => this.handleSubmit(e)}>
                             <Form.Group >
                                 <Form.Label>
-                                    First Name:
+                                    Title:
                                 </Form.Label>
                                 <Form.Control 
-                                    name="first_name" 
+                                    name="title" 
+                                    placeholder="new title" 
                                     onChange={this.handleChange}
                                     type="text" 
-                                    value={this.state.fields.first_name}
+                                    value={this.state.fields.title}
                                     />
                             </Form.Group>
                             <Form.Group >
                                 <Form.Label>
-                                    Last Name:
+                                    Description:
                                 </Form.Label>
                                 <Form.Control 
-                                    name="last_name" 
+                                    name="description" 
+                                    placeholder="new description" 
                                     onChange={this.handleChange}
                                     type="text" 
-                                    value={this.state.fields.last_name}
+                                    value={this.state.fields.description}
                                     />
                             </Form.Group>
                             <Form.Group >
                                 <Form.Label>
-                                    Username:
+                                    Image Link:
                                 </Form.Label>
                                 <Form.Control 
-                                    name="username" 
+                                    name="content" 
+                                    placeholder="new image link" 
                                     onChange={this.handleChange}
                                     type="text" 
-                                    value={this.state.fields.username}
+                                    value={this.state.fields.content}
                                     />
                             </Form.Group>
                             <Button type="submit" variant="primary">Submit Changes</Button>
@@ -112,16 +106,10 @@ class AccountEdit extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.user.user.data.attributes
-    }
-}
-
 const mapDispatchToProps = dispatch => {
     return {
-        onSubmit: (userObject) => dispatch(editUser(userObject))
+        onCreateIcon: (newIcon) => dispatch(postIcon(newIcon)) 
     }
 }
 
-export default composedAuthHOC(connect(mapStateToProps, mapDispatchToProps)(AccountEdit));
+export default composedAuthHOC(connect(null, mapDispatchToProps)(CreateIconForm));

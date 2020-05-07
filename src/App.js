@@ -8,6 +8,8 @@ import Board from './components/Board';
 import EditForm from './components/EditForm';
 import AccountEdit from './components/AccountEdit';
 import CreateBoardForm from './components/CreateBoardForm';
+import EditIcon from './components/EditIcon';
+import CreateIconForm from './components/CreateIconForm';
 import './App.css';
 import store from './redux/store';
 import { fetchBoards } from './redux'
@@ -65,6 +67,16 @@ class App extends Component {
           <Route
             path="/account_edit/:id"
             render={(props) => <AccountEdit {...props} />}
+          />
+
+          <Route 
+            path="/edit_icon/:id"
+            render={(props) => <EditIcon {...props}/>}
+          />
+
+          <Route 
+            exact path="/icon/create"
+            render={(props) => <CreateIconForm {...props}/>}
           />
 
         </div>

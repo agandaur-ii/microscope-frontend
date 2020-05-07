@@ -1,31 +1,74 @@
-import React from 'react';
-import { Card } from "react-bootstrap";
-import icon from '../IMG/icon.jpg'
-import { useDrag } from "react-dnd"
-import { ItemTypes } from '../utils/items';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import composedAuthHOC from '../HOC/AuthHOC';
+import { deleteIcon } from '../redux';
+import { Card, Button } from "react-bootstrap";
 
 
-const Icon = props => {
+class Icon extends Component {
+    state = {
+        reveal: false,
+        hover: false
+    }
+    
 
-    const [{ isDragging }, drag] = useDrag({
-        item: {
-            type: ItemTypes.ICON,
-            id: props.id
-        },
-        collect: monitor => ({
-            isDragging: !!monitor.isDragging()
+    handleClick = () => {
+        this.setState({
+            reveal: !this.state.reveal
         })
-    })
+    }
 
-    return (
-        <Card  
-        style={{width: '1rem'}}
-        ref={drag}
-        opacity={isDragging ? '0.5' : '1'}
-        >
-            <Card.Img src={`${icon}`}/>
-        </Card>
-    )
+    handleHoverOver = () => {
+        this.setState({
+            hover: true
+        })
+    }
+
+    handleHoverAway = () => {
+        this.setState({
+            hover: false
+        })
+    }
+    
+    handleDelete = () => {
+        this.props.onDelete(this.props.thisIcon.attributes.id)
+    }
+
+    render() {
+        const {bodies} = this.props.thisIcon.attributes
+        return (
+            <Card 
+                onClick={this.handleClick} 
+                onMouseEnter={this.handleHoverOver} 
+                onMouseLeave={this.handleHoverAway}
+                style={{ width: '3rem' }}
+            >
+                <Card.Header>{this.props.thisIcon.attributes.title}</Card.Header>
+                <Card.Text>{bodies[0].description}</Card.Text>
+                {this.state.reveal ?
+                <> 
+                    <Card.Img src={bodies[0].content}/>
+                    <Button variant="info" type="submit">View</Button>
+                </>    
+                :
+                null
+                }
+                {this.state.reveal && this.state.hover ?
+                <> 
+                    <Button variant="danger" onClick={this.handleDelete}type="submit">Delete</Button>
+                </>    
+                :
+                null
+                }
+            </Card>
+        )
+    }
 }
 
-export default Icon; 
+const mapDispatchToProps = dispatch => {
+    return {
+        onDelete: (id) => dispatch(deleteIcon(id))
+    }
+}
+
+export default composedAuthHOC(connect(null, mapDispatchToProps)(Icon));

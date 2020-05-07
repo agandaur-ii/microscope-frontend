@@ -30,7 +30,7 @@ class CreateBoardForm extends Component {
     handleSubmit = e => {
         e.preventDefault()
         let boardObject = {
-            user_id: this.props.user.id,
+            user_id: this.props.user.data.id,
             title: this.state.fields.title,
             background_img: this.state.fields.background_img,
         }

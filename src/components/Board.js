@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
 import composedAuthHOC from '../HOC/AuthHOC';
 import { Redirect } from "react-router-dom"
-import { Button } from 'react-bootstrap';
-import BoardGrid from './BoardGrid';
-import Icon from './Icon';
+import { Button, Col, Row, Container } from 'react-bootstrap';
+import BoardGridDrag from './BoardGridDrag';
+import IconContainer from '../containers/IconContainer';
 import { connect } from 'react-redux';
 import { deleteBoard } from '../redux';
+import { fetchIcons } from '../redux';
 
 class Board extends Component {
     constructor() {
         super();
-        this.state ={
+        this.state = {
             edit: false,
             delete: false,
             deleteCheck: false,
             add_icon: false
         }
     };
+
+    componentDidMount() {
+        this.props.getIcons()
+    }
 
     handleEdit = () => {
         this.setState({
@@ -49,12 +54,6 @@ class Board extends Component {
         })
     }
 
-    handleDoneEditting = () => {
-        this.setState({
-            add_icon: false
-        })
-    }
-
     render() {
         const {edit} = this.state
 
@@ -65,12 +64,23 @@ class Board extends Component {
             }}/>
         }
 
+        if (this.state.add_icon) {
+            return <Redirect to={{
+                pathname: "/icon/create",
+                state: {boardId: this.props.match.params.id}
+            }}/>
+        }
+
         if (this.state.delete) {
             return <Redirect to="/boards"/>
         }
 
         if (this.props.allBoards.loading) {
-            return <h3>Please Hold</h3>
+            return <h5>Please Hold</h5>
+        }
+
+        if (this.props.icons.loading) {
+            return <h5>Please Hold</h5>
         }
 
         const thisBoard = this.props.boards.find(board => 
@@ -78,19 +88,11 @@ class Board extends Component {
         )
 
         return (
-            <div>
-                <h2>{thisBoard.attributes.title}</h2>
-                <div>
-                    {this.state.add_icon ?
-                    <Button variant="info" onClick={this.handleDoneEditting} type="submit">Done Adding Icons</Button>
-                    : 
-                    <Button variant="info" onClick={this.handleIconButton} type="submit">Add Icon</Button>
-                    }
-                    {this.state.add_icon ? <div>"Drag Me!"<Icon /></div>: null}
-                </div>
-                <div>
-                    <BoardGrid image={thisBoard.attributes.background_img}/>
-                </div>
+            <Container >
+            <Row>
+                <Col md={9}>
+                    <h2>{thisBoard.attributes.title}</h2>
+                    <BoardGridDrag image={thisBoard.attributes.background_img}/>
                 <div>
                     <Button onClick={this.handleEdit}type="submit ">Edit</Button>
                     {this.state.deleteCheck ? 
@@ -102,8 +104,15 @@ class Board extends Component {
                     <Button variant="danger" onClick={this.handleDelete} type="submit ">Delete</Button>
                     }
                 </div>
-                
-            </div>
+                </Col>
+                <Col md={3}>
+                    <IconContainer thisBoard={thisBoard}/>
+                <div>
+                    <Button variant="info" onClick={this.handleIconButton} type="submit">Add Icon</Button>
+                </div>
+                </Col>
+            </Row>
+            </Container>
         )
     }
 }
@@ -111,13 +120,15 @@ class Board extends Component {
 const mapStateToProps = state => {
     return {
         allBoards: state.boards,
-        boards: state.boards.boards
+        boards: state.boards.boards,
+        icons: state.icons
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onDelete: (id) => dispatch(deleteBoard(id))
+        onDelete: (id) => dispatch(deleteBoard(id)),
+        getIcons: () => dispatch(fetchIcons())
     }
 }
 

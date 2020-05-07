@@ -9,8 +9,6 @@ class SplashPage extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.token)
-        console.log("splash token^^")
         if (this.props.token) {
             this.setState({
                 redirect: true

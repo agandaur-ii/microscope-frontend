@@ -18,7 +18,7 @@ const BoardGrid = props => {
             <Card
                 ref={drop}
                 border={isOver ? 'danger' : 'dark'}
-                style={{ width: '70rem', height: '80rem'}}
+                // style={{ width: '50rem', height: '60rem'}}
             >
                 <Card.Img 
                 src={`${props.image}`}

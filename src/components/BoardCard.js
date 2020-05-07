@@ -11,7 +11,7 @@ class BoardCard extends Component {
 
     handleClick = () => {
         this.setState({
-            redirect: true
+            redirect: true 
         })
         
     }
@@ -28,9 +28,10 @@ class BoardCard extends Component {
 
         return (
             <>
-                <Card className="text-center" border="dark" style={{ width: '25rem', height: '30rem'}} >
+                <Card className="text-center" border="dark" style={{ width: '25rem', height: '25rem'}}>
                     <Card.Header>{this.props.board.attributes.title}</Card.Header>
                     <Card.Img src={`${this.props.board.attributes.background_img}`} className="card-image"/>
+
                 </Card>
                 <Button
                     onClick={this.handleClick} 
@@ -39,7 +40,8 @@ class BoardCard extends Component {
                     style={{ width: '25rem'}} 
                     type="submit"
                     block
-                >View</Button>
+                    >View
+                </Button>
             </>
         )
     }

@@ -35,6 +35,21 @@ const createUser = (data) => {
   }).then(res => res.json());
 };
 
+const editUser = (userObject) => {
+  return fetch(`${API_ROOT}/users/${userObject.id}`, {
+    method: "PATCH",
+    headers: headers(),
+    body: JSON.stringify(userObject)
+  }).then(res => res.json());
+}
+
+const deleteUser = (user_id) => {
+  return fetch(`${API_ROOT}/users/${user_id}`, {
+    method: "DELETE",
+    headers: headers(),
+  }).then(res => res.json());
+}
+
 const getBoard = (board_id) => {
   return fetch(`${API_ROOT}/boards/${board_id}`, {headers: headers()})
   .then(response => response.json())
@@ -68,16 +83,29 @@ const deleteBoard = (board_id) => {
   }).then(res => res.json());
 }
 
-const editUser = (userObject) => {
-  return fetch(`${API_ROOT}/users/${userObject.id}`, {
-    method: "PATCH",
+const getIcons = () => {
+  return fetch(`${API_ROOT}/icons`, {headers: headers()})
+  .then(response => response.json())
+}
+
+const createIcon = (iconObject) => {
+  return fetch(`${API_ROOT}/icons/`, {
+    method: "POST",
     headers: headers(),
-    body: JSON.stringify(userObject)
+    body: JSON.stringify(iconObject)
   }).then(res => res.json());
 }
 
-const deleteUser = (user_id) => {
-  return fetch(`${API_ROOT}/users/${user_id}`, {
+const editIcon = (iconObject) => {
+  return fetch(`${API_ROOT}/icons/${iconObject.id}`, {
+    method: "PATCH",
+    headers: headers(),
+    body: JSON.stringify(iconObject)
+  }).then(res => res.json());
+}
+
+const deleteIcon = (icon_id) => {
+  return fetch(`${API_ROOT}/icons/${icon_id}`, {
     method: "DELETE",
     headers: headers(),
   }).then(res => res.json());
@@ -99,5 +127,11 @@ export const api = {
       createBoard,
       editBoard,
       deleteBoard
+    },
+    icons: {
+      getIcons,
+      createIcon,
+      editIcon,
+      deleteIcon
     }
 };

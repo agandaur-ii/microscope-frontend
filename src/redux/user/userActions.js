@@ -51,9 +51,7 @@ export const editUser = (userObject) => {
             if (data.error) {
                 dispatch(editUserFailure(data.error))
             } else {
-                console.log(data.data.attributes)
-                console.log("data from User Action^^^")
-                dispatch(editUserSuccess(data.data.attributes))
+                dispatch(editUserSuccess(data))
             }
         })
     }
