@@ -4,21 +4,10 @@ import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 
 class SplashPage extends Component {
-    state = {
-        redirect: false
-    }
-
-    componentDidMount() {
-        if (this.props.token) {
-            this.setState({
-                redirect: true
-            })
-        }
-    }
     
     render() {
 
-        if (this.state.redirect) {
+        if (this.props.token) {
             return(
                 <Redirect to='/boards'/>
             )
