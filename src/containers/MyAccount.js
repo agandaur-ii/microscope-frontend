@@ -60,9 +60,9 @@ class MyAccount extends React.Component {
         return(
             <div>
                 <h5><strong>Account Info</strong></h5>
-                <h5>First name: <small class="text-muted">{this.props.user.first_name}</small></h5>
-                <h5>Last name: <small class="text-muted">{this.props.user.last_name}</small></h5>
-                <h5>Username: <small class="text-muted">{this.props.user.username}</small></h5>
+                <h5>First name: <small className="text-muted">{this.props.user.first_name}</small></h5>
+                <h5>Last name: <small className="text-muted">{this.props.user.last_name}</small></h5>
+                <h5>Username: <small className="text-muted">{this.props.user.username}</small></h5>
                 <Button variant="outline-primary" onClick={this.handleEdit}type="submit">Edit</Button>
                 {this.state.deleteCheck ? 
                     <>
