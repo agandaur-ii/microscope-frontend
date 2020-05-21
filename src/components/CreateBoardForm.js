@@ -74,13 +74,13 @@ class CreateBoardForm extends Component {
                                     />
                             </Form.Group>
                             <Form.Group >
-                            <ImageUploader
+                            {/* <ImageUploader
                                 withIcon={true}
                                 buttonText='Choose images'
                                 onChange={event => this.onDrop(event)}
                                 imgExtension={['.jpg', '.png', '.jpeg']}
-                            />
-                            {/* <Form.Label>
+                            /> */}
+                            <Form.Label>
                                     Image Link:
                                 </Form.Label>
                                 <Form.Control 
@@ -89,7 +89,7 @@ class CreateBoardForm extends Component {
                                     onChange={this.handleChange}
                                     type="text" 
                                     value={this.state.background_img}
-                                    /> */}
+                                    />
                             </Form.Group>
                             <Button type="submit" variant="primary">Submit Changes</Button>
                         </Form>
