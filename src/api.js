@@ -1,3 +1,5 @@
+import { objectToFormData } from 'object-to-formdata';
+
 const API_ROOT = "http://localhost:3000/api/v1"
 //need to change when we go to heroku
 
@@ -61,10 +63,23 @@ const getBoards = () => {
 }
 
 const createBoard = (boardObject) => {
+
+  let nestedObject = {'board': boardObject}
+
+  let formData = objectToFormData(nestedObject)
+  // let formData = new FormData()
+  // formData.append('board', 
+  //   {
+  //     'user_id': boardObject.user_id,
+  //     'title': boardObject.title,
+  //     'background_img': boardObject.background_img
+  //   }
+  // )
+
   return fetch(`${API_ROOT}/boards/`, {
     method: "POST",
-    headers: headers(),
-    body: JSON.stringify(boardObject)
+    headers: {Authorization: token()},
+    body: formData
   }).then(res => res.json());
 }
 

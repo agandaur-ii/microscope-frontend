@@ -37,9 +37,6 @@ class CreateBoardForm extends Component {
             background_img: this.state.background_img,
         }
 
-        console.log(boardObject)
-        console.log("board Object^^^")
-
         this.props.onCreateBoard(boardObject)
         this.setState({
             redirect: true
