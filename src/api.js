@@ -65,16 +65,7 @@ const getBoards = () => {
 const createBoard = (boardObject) => {
 
   let nestedObject = {'board': boardObject}
-
   let formData = objectToFormData(nestedObject)
-  // let formData = new FormData()
-  // formData.append('board', 
-  //   {
-  //     'user_id': boardObject.user_id,
-  //     'title': boardObject.title,
-  //     'background_img': boardObject.background_img
-  //   }
-  // )
 
   return fetch(`${API_ROOT}/boards/`, {
     method: "POST",
