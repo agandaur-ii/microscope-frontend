@@ -30,7 +30,7 @@ class BoardCard extends Component {
             <>
                 <Card className="text-center card border-dark mb-3" style={{ width: '25rem', maxheight: '25rem'}}>
                     <Card.Header >{this.props.board.attributes.title}</Card.Header>
-                    <Card.Img src={`${this.props.board.attributes.background_img}`}
+                    <Card.Img src={`${this.props.board.links.custom_url}`}
                         className="card-image"
                         style={{width: '100%', height: 'auto'}}
                     />

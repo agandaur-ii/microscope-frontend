@@ -14,7 +14,7 @@ class CreateBoardForm extends Component {
         this.state = {
             redirect: false,
             userId: "",
-            background_img: "",
+            image: "",
             title: "",
         };
     };
@@ -26,7 +26,7 @@ class CreateBoardForm extends Component {
     };
 
     onDrop = picture => {
-        this.setState({ background_img: picture[0] })
+        this.setState({ image: picture[0] })
     }
     
     handleSubmit = e => {
@@ -34,7 +34,7 @@ class CreateBoardForm extends Component {
         let boardObject = {
             user_id: this.props.user.data.id,
             title: this.state.title,
-            background_img: this.state.background_img,
+            image: this.state.image,
         }
 
         this.props.onCreateBoard(boardObject)
@@ -75,7 +75,7 @@ class CreateBoardForm extends Component {
                                 withIcon={true}
                                 buttonText='Choose images'
                                 onChange={event => this.onDrop(event)}
-                                imgExtension={['.jpg', '.png', '.jpeg']}
+                                imgExtension={['.jpg', '.png', '.jpeg', '.gif']}
                             />
                             </Form.Group>
                             <Button type="submit" variant="primary">Submit Changes</Button>

@@ -63,7 +63,6 @@ const getBoards = () => {
 }
 
 const createBoard = (boardObject) => {
-
   let nestedObject = {'board': boardObject}
   let formData = objectToFormData(nestedObject)
 

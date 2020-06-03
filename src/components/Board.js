@@ -92,7 +92,7 @@ class Board extends Component {
             <Row>
                 <Col md={9}>
                     <h2>{thisBoard.attributes.title}</h2>
-                    <BoardGridDrag image={thisBoard.attributes.background_img}/>
+                    <BoardGridDrag image={thisBoard.links.custom_url}/>
                 <div>
                     <Button variant="outline-primary" onClick={this.handleEdit}type="submit ">Edit</Button>
                     {this.state.deleteCheck ? 
