@@ -57,7 +57,6 @@ export const postBoard = (newBoard) => {
                 dispatch(postBoardFailure(data.error))
             } else {
                 dispatch(postBoardSuccess(data.data))
-                console.log(data, "DATA RETURNED FROM RAILS")
             }
         })
     }
