@@ -6,37 +6,42 @@ import Button from 'react-bootstrap/Button';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { postIcon } from '../redux';
+import ImageUploader from 'react-images-upload';
 
 class CreateIconForm extends Component {
     constructor(){
         super();
         this.state = {
             redirect: false,
-            boardId: "",
-            fields: {
-                title: "",
-                description: "",
-                type: "image",
-                content: ""
-            }
+            title: "",
+            description: "",
+            type: "image",
+            image: ""
         };
     };
 
     handleChange = e => {
-        const newFields = {...this.state.fields, [e.target.name]: e.target.value};
         this.setState({
-            fields: newFields
+            [e.target.name]: e.target.value
         });
     };
+
+    onDrop = picture => {
+        this.setState({ image: picture[0] })
+    }
     
     handleSubmit = e => {
         e.preventDefault()
         let iconObject = {
-            board_id: this.props.location.state.boardId,
-            title: this.state.fields.title,
-            description: this.state.fields.description,
-            type: this.state.fields.type,
-            content: this.state.fields.content
+            icon: {
+                board_id: this.props.location.state.boardId,
+                title: this.state.title,
+            },
+            body: {
+                description: this.state.description,
+                body_type: this.state.type,
+                image: this.state.image
+            }
         }
 
         this.props.onCreateIcon(iconObject)
@@ -69,7 +74,7 @@ class CreateIconForm extends Component {
                                     placeholder="new title" 
                                     onChange={this.handleChange}
                                     type="text" 
-                                    value={this.state.fields.title}
+                                    value={this.state.title}
                                     />
                             </Form.Group>
                             <Form.Group >
@@ -81,20 +86,16 @@ class CreateIconForm extends Component {
                                     placeholder="new description" 
                                     onChange={this.handleChange}
                                     type="text" 
-                                    value={this.state.fields.description}
+                                    value={this.state.description}
                                     />
                             </Form.Group>
                             <Form.Group >
-                                <Form.Label>
-                                    Image Link:
-                                </Form.Label>
-                                <Form.Control 
-                                    name="content" 
-                                    placeholder="new image link" 
-                                    onChange={this.handleChange}
-                                    type="text" 
-                                    value={this.state.fields.content}
-                                    />
+                            <ImageUploader
+                                withIcon={true}
+                                buttonText='Choose images'
+                                onChange={event => this.onDrop(event)}
+                                imgExtension={['.jpg', '.png', '.jpeg', '.gif']}
+                            />
                             </Form.Group>
                             <Button type="submit" variant="primary">Submit Changes</Button>
                         </Form>

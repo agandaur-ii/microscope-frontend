@@ -48,7 +48,7 @@ class Icon extends Component {
                 <Card.Text>{bodies[0].description}</Card.Text>
                 {this.state.reveal ?
                 <> 
-                    <Card.Img src={bodies[0].content}/>
+                    <Card.Img src={this.props.thisIcon.attributes.body_url}/>
                     <Button variant="info" type="submit">View</Button>
                 </>    
                 :

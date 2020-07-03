@@ -94,10 +94,15 @@ const getIcons = () => {
 }
 
 const createIcon = (iconObject) => {
+  let nestedObject = {
+    'icon': iconObject.icon,
+    'body': iconObject.body
+  }
+  let formData = objectToFormData(nestedObject)
   return fetch(`${API_ROOT}/icons/`, {
     method: "POST",
-    headers: headers(),
-    body: JSON.stringify(iconObject)
+    headers: {Authorization: token()},
+    body: formData
   }).then(res => res.json());
 }
 
