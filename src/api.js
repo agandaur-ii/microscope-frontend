@@ -1,8 +1,6 @@
 import { objectToFormData } from 'object-to-formdata';
 
-//old link
-//const API_ROOT = "http://localhost:3000/api/v1"
-const API_ROOT = "https://agandaur-ii.github.io"
+const API_ROOT = "http://localhost:3000/api/v1"
 
 const token = () => localStorage.getItem("token")
 
