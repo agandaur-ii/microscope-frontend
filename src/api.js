@@ -1,7 +1,8 @@
 import { objectToFormData } from 'object-to-formdata';
 
-const API_ROOT = "http://localhost:3000/api/v1"
-//need to change when we go to heroku
+//old link
+//const API_ROOT = "http://localhost:3000/api/v1"
+const API_ROOT = "https://agandaur-ii.github.io"
 
 const token = () => localStorage.getItem("token")
 
