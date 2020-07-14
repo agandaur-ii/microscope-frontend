@@ -1,6 +1,7 @@
 import { objectToFormData } from 'object-to-formdata';
 
-const API_ROOT = "http://localhost:3000/api/v1"
+//const API_ROOT = "http://localhost:3000/api/v1"
+const API_ROOT = "https://lit-castle-24379.herokuapp.com/api/v1"
 
 const token = () => localStorage.getItem("token")
 
