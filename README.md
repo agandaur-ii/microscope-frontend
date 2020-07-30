@@ -15,6 +15,9 @@
 * Create a Board by adding a title and an image
 * Add Icons to your Board inside the Board view
 
+## Demo
+![](images/MicroscopeDemo.gif)
+
 
 
 
